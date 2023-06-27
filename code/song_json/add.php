@@ -1,148 +1,111 @@
 <?php
 
-header('Content-Type:text/html;charset="GBK"');
+header('Content-Type:text/html;charset="UTF-8"');
 
-// function add () {
-//   // Ä¿±ê£º½ÓÊÕ¿Í»§¶ËÌá½»µÄÊı¾İºÍÎÄ¼ş£¬×îÖÕ±£´æµ½Êı¾İÎÄ¼şÖĞ
-//   $data = array(); // ×¼±¸Ò»¸ö¿ÕµÄÈİÆ÷£¬ÓÃÀ´×°×îÖÕÒª±£´æµÄ Êı¾İ
-//   $data['id'] = uniqid();
-
-
-//   // ¼ÇÏÂ title ºÍ artist
-//   $data['title'] = $_POST['title'];
-//   $data['artist'] = $_POST['artist'];
-
-//   // 2. ½ÓÊÕÍ¼Æ¬ÎÄ¼ş
-
-
-//   $images = $_FILES['images'];
-//   // ×¼±¸Ò»¸öÈİÆ÷×°ËùÓĞµÄº£±¨Â·¾¶
-//   $data['images'] = array();
-
-//   // ±éÀúÕâ¸öÎÄ¼şÓòÖĞµÄÃ¿Ò»¸öÎÄ¼ş£¨ÅĞ¶ÏÊÇ·ñ³É¹¦¡¢ÅĞ¶ÏÀàĞÍ¡¢ÅĞ¶Ï´óĞ¡¡¢ÒÆ¶¯µ½ÍøÕ¾Ä¿Â¼ÖĞ£©
-//   for ($i = 0; $i < count($images['name']); $i++) {
-//     // $images['error'] => [0, 0, 0]
-//     if ($images['error'][$i] !== UPLOAD_ERR_OK) {
-//       $GLOBALS['error_message'] = 'ÉÏ´«º£±¨ÎÄ¼şÊ§°Ü1';
-//       return;
-//     }
-
-//     // ÀàĞÍµÄĞ£Ñé
-//     // $images['type'] => ['image/png', 'image/jpg', 'image/gif']
-//     if (strpos($images['type'][$i], 'image/') !== 0) {
-//       $GLOBALS['error_message'] = 'ÉÏ´«º£±¨ÎÄ¼ş¸ñÊ½´íÎó';
-//       return;
-//     }
-
-//     // TODO: ÎÄ¼ş´óĞ¡µÄÅĞ¶Ï
-//     if ($images['size'][$i] > 1 * 1024 * 1024) {
-//       $GLOBALS['error_message'] = 'ÉÏ´«º£±¨ÎÄ¼ş¹ı´ó';
-//       return;
-//     }
-
-//     // ÒÆ¶¯ÎÄ¼şµ½ÍøÕ¾·¶Î§Ö®ÄÚ
-//     $dest = '../uploads/' . uniqid() . $images['name'][$i];
-//     if (!move_uploaded_file($images['tmp_name'][$i], $dest)) {
-//       $GLOBALS['error_message'] = 'ÉÏ´«º£±¨ÎÄ¼şÊ§°Ü2';
-//       return;
-//     }
-
-//     $data['images'][] = substr($dest, 2);
-//   }
-
-//   // 3. ½ÓÊÕÒôÀÖÎÄ¼ş
-//   // =======================================================
-//   if (empty($_FILES['source'])) {
-//     $GLOBALS['error_message'] = 'ÇëÕı³£Ê¹ÓÃ±íµ¥';
-//     return;
-//   }
-
-//   $source = $_FILES['source'];
-//   // => { name: , tmp_name .... }
-
-//   // ÅĞ¶ÏÊÇ·ñÉÏ´«³É¹¦
-//   if ($source['error'] !== UPLOAD_ERR_OK) {
-//     $GLOBALS['error_message'] = 'ÉÏ´«ÒôÀÖÎÄ¼şÊ§°Ü1';
-//     return;
-//   }
-//   // ÅĞ¶ÏÀàĞÍÊÇ·ñÔÊĞí
-//   $source_allowed_types = array('audio/mp3', 'audio/wma');
-//   if (!in_array($source['type'], $source_allowed_types)) {
-//     $GLOBALS['error_message'] = 'ÉÏ´«ÒôÀÖÎÄ¼şÀàĞÍ´íÎó';
-//     return;
-//   }
-//   // ÅĞ¶Ï´óĞ¡
-//   if ($source['size'] < 1 * 1024 * 1024) {
-//     $GLOBALS['error_message'] = 'ÉÏ´«ÒôÀÖÎÄ¼ş¹ıĞ¡';
-//     return;
-//   }
-//   if ($source['size'] > 10 * 1024 * 1024) {
-//     $GLOBALS['error_message'] = 'ÉÏ´«ÒôÀÖÎÄ¼ş¹ı´ó';
-//     return;
-//   }
-//   // ÒÆ¶¯
-//   $target = '../uploads/' . uniqid() . '-' . $source['name'];
-//   if (!move_uploaded_file($source['tmp_name'], $target)) {
-//     $GLOBALS['error_message'] = 'ÉÏ´«ÒôÀÖÎÄ¼şÊ§°Ü2';
-//     return;
-//   }
-//   // ½«Êı¾İ×°ÆğÀ´
-//   // ±£´æÊı¾İµÄÂ·¾¶Ò»¶¨Ê¹ÓÃ¾ø¶ÔÂ·¾¶´æ
-//   $data['source'] = substr($target, 2);
-
-//   // 4. ½«Êı¾İ¼ÓÈëµ½Ô­ÓĞÊı¾İÖĞ
-//   $json = file_get_contents('data.json');
-//   $old = json_decode($json, true);
-//   array_push($old, $data);
-//   $new_json = json_encode($old);
-//   file_put_contents('data.json', $new_json);
-
-//   // 5. Ìø×ª
-//   header('Location: list.php');
-// }
-// 
 function add() {
-  //ÅĞ¶Ï±êÌâÊÇ·ñÎª¿Õ
+  $data['id'] = uniqid();
+
+  //åˆ¤æ–­æ ‡é¢˜æ˜¯å¦ä¸ºç©º
   if(empty($_POST['title'])){
-    $GLOBALS['error'] = 'ÇëÊäÈë±êÌâÃû³Æ';
+    $GLOBALS['message'] = 'è¯·è¾“å…¥æ ‡é¢˜åç§°';
     return;
   }
-  //ÅĞ¶Ï¸èÊÖÊÇ·ñÎª¿Õ
+
+  $data['title'] = $_POST['title'];
+
+  //åˆ¤æ–­æ­Œæ‰‹æ˜¯å¦ä¸ºç©º
   if(empty($_POST['artist'])){
-    $GLOBALS['error'] = 'ÇëÊäÈë¸èÊÖÃû';
+    $GLOBALS['message'] = 'è¯·è¾“å…¥æ­Œæ‰‹å';
     return;
   }
-  //ÅĞ¶Ïº£±¨ÓòÊÇ·ñÎª¿Õ
+
+  $data['artist'] = $_POST['artist'];
+
+  //==============================================================================
+  //åˆ¤æ–­æµ·æŠ¥åŸŸæ˜¯å¦ä¸ºç©º
   if(empty($_FILES['images'])){
-    $GLOBALS['error'] = 'ÇëÉÏ´«º£±¨ÎÄ¼ş1';
+    $GLOBALS['message'] = 'è¯·ä¸Šä¼ æµ·æŠ¥æ–‡ä»¶1';
     return;
   }
 
   $file_images = $_FILES['images'];
   //var_dump($file_images);
-  //ÅĞ¶ÏÉÏ´«µÄº£±¨ÎÄ¼şÊÇ·ñÓĞ´íÎó
-  if($file_images['error'] !== UPLOAD_ERR_OK ){
-    $GLOBALS['error'] = 'ÇëÉÏ´«º£±¨ÎÄ¼ş2';
+  //åˆ¤æ–­ä¸Šä¼ çš„æµ·æŠ¥æ–‡ä»¶æ˜¯å¦æœ‰é”™è¯¯
+  if($file_images['error'] !== UPLOAD_ERR_OK){
+    $GLOBALS['message'] = 'è¯·ä¸Šä¼ æµ·æŠ¥æ–‡ä»¶2';
     return;
   }
-  //ÅĞ¶Ïº£±¨µÄ´óĞ¡ÊÇ·ñºÏÊÊ
-  if($file_images['size'] < 1 * 1024 *1024 ){
-    $GLOBALS['error'] = 'ÉÏ´«µÄº£±¨ÎÄ¼şÌ«Ğ¡';
+  //åˆ¤æ–­æµ·æŠ¥çš„å¤§å°æ˜¯å¦åˆé€‚
+  if($file_images['size'] > 1 * 1024 *1024 ){
+    $GLOBALS['message'] = 'ä¸Šä¼ çš„æµ·æŠ¥æ–‡ä»¶å¤ªå¤§';
     return;
   }
-  if($file_images['size'] > 10 * 1024 *1024 ){
-    $GLOBALS['error'] = 'ÉÏ´«µÄº£±¨ÎÄ¼şÌ«´ó';
-    return;
-  }
-  //ÅĞ¶Ïº£±¨µÄÎÄ¼ş¸ñÊ½ÊÇ·ñºÏ·¨
+  //åˆ¤æ–­æµ·æŠ¥çš„æ–‡ä»¶æ ¼å¼æ˜¯å¦åˆæ³•
   $file_images_source = array('image/png', 'image/jpg', 'image/gif');
-  //ÅĞ¶ÏÒÆ¶¯ÊÇ·ñ³É¹¦
-  if(in_array($file_images['type'],$file_images_source)){
-    $GLOBALS['error'] = 'ÉÏ´«µÄº£±¨ÎÄ¼ş¸ñÊ½²»¶Ô';
+  if(array_search($file_images['type'],$file_images_source)){
+    $GLOBALS['message'] = 'ä¸Šä¼ çš„æµ·æŠ¥æ–‡ä»¶æ ¼å¼ä¸å¯¹';
     return;
   }
-  //ÌáÊ¾ÉÏ´«³É¹¦8
+  //åˆ¤æ–­ç§»åŠ¨æ˜¯å¦æˆåŠŸ
+  $target1 = 'uploads/' . uniqid() . '-' . $file_images['name'];
+  if(!move_uploaded_file($file_images['tmp_name'], $target1)){
+    $GLOBALS['message'] = 'æµ·æŠ¥ç§»åŠ¨å¤±è´¥';
+    return;
+  }
+
+  //ç§»åŠ¨æ—¶çš„è·¯å¾„
+  $data['images'] = $target1;
+  //var_dump($target1);
+
+  //==============================================================================
+  //ä¸Šä¼ éŸ³ä¹æ–‡ä»¶
+
+  //åˆ¤æ–­éŸ³ä¹æ–‡ä»¶åŸŸæ˜¯å¦ä¸ºç©º
+  if(empty($_FILES['source'])){
+    $GLOBALS['message'] = 'è¯·ä¸Šä¼ éŸ³ä¹æ–‡ä»¶1';
+    return;
+  }
+  //åˆ¤æ–­ä¸Šä¼ çš„éŸ³ä¹æ–‡ä»¶æ˜¯å¦ä¸ºç©º
+  $file_source = $_FILES['source'];
+  if($file_source['error'] !== UPLOAD_ERR_OK){
+    $GLOBALS['message'] = 'è¯·ä¸Šä¼ éŸ³ä¹æ–‡ä»¶2';
+    return;
+  }
+  //åˆ¤æ–­ä¸Šä¼ çš„éŸ³ä¹æ–‡ä»¶å¤§å°æ˜¯å¦åˆé€‚
+  if($file_source['size'] < 1 * 1024 *1024 ){
+    $GLOBALS['message'] = 'ä¸Šä¼ çš„éŸ³ä¹æ–‡ä»¶å¤ªå°';
+    return;
+  }
+  if($file_source['size'] > 10 * 1024 *1024 ){
+    $GLOBALS['message'] = 'ä¸Šä¼ çš„éŸ³ä¹æ–‡ä»¶å¤ªå¤§';
+    return;
+  }
+  //åˆ¤æ–­ä¸Šä¼ çš„éŸ³ä¹æ–‡ä»¶çš„æ ¼å¼æ˜¯å¦åˆé€‚
+  $file_music_source = array('audio/mp3', 'audio/wma');
+  if(array_search($file_source['type'], $file_music_source)){
+    $GLOBALS['message'] = 'ä¸Šä¼ çš„éŸ³ä¹æ–‡ä»¶æ ¼å¼ä¸ç¬¦åˆ';
+    return;
+  }
+  //åˆ¤æ–­ç§»åŠ¨æ˜¯å¦æˆåŠŸ
+  $target2 = 'uploads/' . uniqid() . '-' . $file_source['name'];
+  if(!(move_uploaded_file($file_source['tmp_name'], $target2))){
+    $GLOBALS['message'] = 'ä¸Šä¼ çš„éŸ³ä¹æ–‡ä»¶ç§»åŠ¨å¤±è´¥';
+    return;
+  }
+  $data['source'] = $target2;
+
+  //å°†æ•°æ®åŠ å…¥åŸæœ‰æ•°æ®ä¸­
+  $json = file_get_contents('data.json');
+  $old = json_decode($json,true);
+  array_push($old,$data);
+  $new = json_encode($old);
+  file_put_contents('data.json', $new);
+
+  //è·³è½¬å›åˆ—è¡¨é¡µ
+  header('Location: list.php');
 }
+
+  
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   add();
@@ -153,40 +116,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Ìí¼ÓĞÂÒôÀÖ</title>
+  <title>æ·»åŠ æ–°éŸ³ä¹</title>
   <link rel="stylesheet" href="bootstrap.css">
 </head>
 <body>
   <div class="container py-5">
-    <h1 class="display-4">Ìí¼ÓĞÂÒôÀÖ</h1>
+    <h1 class="display-4">æ·»åŠ æ–°éŸ³ä¹</h1>
     <hr>
 
-    <?php if (isset($error)): ?>
+    <?php if (isset($message)): ?>
     <div class="alert alert-danger">
-      <?php echo $error; ?>
+      <?php echo $message; ?>
     </div>
     <?php endif ?>
 
     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" enctype="multipart/form-data">
       <div class="form-group">
-        <label for="title">±êÌâ</label>
+        <label for="title">æ ‡é¢˜</label>
         <input type="text" class="form-control" id="title" name="title">
       </div>
       <div class="form-group">
-        <label for="artist">¸èÊÖ</label>
+        <label for="artist">æ­Œæ‰‹</label>
         <input type="text" class="form-control" id="artist" name="artist">
       </div>
       <div class="form-group">
-        <label for="images">º£±¨</label>
-        <!-- multiple ¿ÉÒÔÈÃÒ»¸öÎÄ¼şÓò¶àÑ¡ -->
-        <input type="file" class="form-control" id="images" name="images[]" accept="image/*" multiple>
+        <label for="images">æµ·æŠ¥</label>
+        <!-- multiple å¯ä»¥è®©ä¸€ä¸ªæ–‡ä»¶åŸŸå¤šé€‰ -->
+        <input type="file" class="form-control" id="images" name="images" accept="image/*" multiple>
       </div>
       <div class="form-group">
-        <label for="source">ÒôÀÖ</label>
-        <!-- accept ¿ÉÒÔÉèÖÃÁ½ÖÖÖµ·Ö±ğÎª  MIME Type / ÎÄ¼şÀ©Õ¹Ãû -->
+        <label for="source">éŸ³ä¹</label>
+        <!-- accept å¯ä»¥è®¾ç½®ä¸¤ç§å€¼åˆ†åˆ«ä¸º  MIME Type / æ–‡ä»¶æ‰©å±•å -->
         <input type="file" class="form-control" id="source" name="source" accept="audio/*">
       </div>
-      <button class="btn btn-primary btn-block">±£´æ</button>
+      <button class="btn btn-primary btn-block">ä¿å­˜</button>
     </form>
   </div>
 </body>
