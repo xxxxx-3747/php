@@ -43,9 +43,9 @@ if (!$data) {
           <td class="align-middle"><?php echo $item['title']; ?></td>
           <td class="align-middle"><?php echo $item['artist']; ?></td>
           <td class="align-middle">
-            
-            <img src="<?php echo $item['images']; ?>" alt="">
-            
+            <?php foreach ($item['images'] as $src): ?>
+              <img src="<?php echo $src; ?>" alt="">
+            <?php endforeach ?>
           </td>
           <td class="align-middle"><audio src="<?php echo $item['source']; ?>" controls></audio></td>
           <td class="align-middle"><a class="btn btn-danger btn-sm" href="delete.php?id=<?php echo $item['id']; ?>">删除</a></td>
