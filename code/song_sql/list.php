@@ -51,16 +51,21 @@ while($item = mysqli_fetch_assoc($content)){
       </thead>
       <tbody class="text-center">
       <?php foreach ($data as $value): ?>
+        <div>
+          
+             
+          
+        </div>
          <tr>
           <td class="align-middle"><?php echo $value['title'] ?></td>
           <td class="align-middle"><?php echo $value['songer'] ?></td>
           <td class="align-middle">
             
-              <img src="<?php echo $value['photo'] ?>" alt="">
+              <img src="<?php echo $value['photo']; ?>" alt="">
             
           </td>
           <td class="align-middle"><audio src="<?php echo $value['music'] ?>" controls></audio></td>
-          <td class="align-middle"><a class="btn btn-danger btn-sm" href="">删除</a></td>
+          <td class="align-middle"><a class="btn btn-danger btn-sm" href="delete.php?id=<?php echo $value['id'] ?>">删除</a></td>
         </tr>
        <?php endforeach ?> 
         
