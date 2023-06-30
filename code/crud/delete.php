@@ -1,30 +1,31 @@
 <?php
 
 // 接收要删除的数据 ID
-if (empty($_GET['id'])) {
-  exit('<h1>必须传入指定参数</h1>');
+// 如果要删除的数据不存在，则跳出
+if(empty($_GET['id'])){
+	exit('<h1>没有这个要删除的数据</h1>');
 }
 
-$id = $_GET['id']; // => 1,2,3
+$id = $_GET['id'];
 
-// 1. 建立连接
-$conn = mysqli_connect('localhost', 'root', '123456', 'test');
+//连接数据库
+$conn = mysqli_connect('localhost','root','123456','user');
 
-if (!$conn) {
-  exit('<h1>连接数据库失败</h1>');
+if(!$conn){
+	exit('<h1>数据库连接失败</h1>');
 }
+//判断数据库是否连接成功
+$query = mysqli_query($conn,'delete from user_info where xh = ' . $id . ';');
 
-// 2. 开始查询
-$query = mysqli_query($conn, 'delete from users where id in (' . $id . ');');
-
-if (!$query) {
-  exit('<h1>查询数据失败</h1>');
+//查询数据
+if(!$query){
+	exit('<h1>删除数据失败</h1>');
 }
+//查看影响的行数
+$col = mysqli_affected_rows($conn);
 
-$affected_rows = mysqli_affected_rows($conn);
+var_dump($col);
 
-if ($affected_rows <= 0) {
-  exit('<h1>删除失败</h1>');
-}
+
 
 header('Location: index.php');

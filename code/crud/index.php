@@ -57,7 +57,7 @@ if(!$query){
           <td name="age"><?php echo $item['age'] ?></td>
           <td class="text-center">
             <a class="btn btn-info btn-sm" href="edit.php">编辑</a>
-            <a class="btn btn-danger btn-sm" href="">删除</a>
+            <a class="btn btn-danger btn-sm" href="delete.php?id=<?php echo $item['xh'] ?>">删除</a>
           </td>
         </tr>
       <?php endwhile ?>
